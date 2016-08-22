@@ -1,0 +1,10 @@
+[
+	{
+		"name":"simple send email",
+		"zh_name":"简单邮件发送"
+	},
+	{
+		"name":"send email with pic",
+		"zh_name":"带图邮件发送"
+	}
+]

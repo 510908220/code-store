@@ -1,0 +1,12 @@
+[
+	{
+		"function": "emails",
+		"zh_function":"邮件",
+		"description":""
+	},
+	{
+		"function": "downloads",
+		"zh_function":"下载",
+		"description":""
+	}
+]

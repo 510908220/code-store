@@ -1,0 +1,11 @@
+{
+	"category": [
+		"internet",
+		"databases",
+		"ssh",
+		"virenv",
+		"delpoy"
+	],
+	"description":"整理python相关的代码"
+
+}
