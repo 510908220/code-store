@@ -1,10 +1,12 @@
 [
 	{
 		"name":"simple send email",
-		"zh_name":"简单邮件发送"
+		"zh_name":"简单邮件发送",
+		"filename":"send_simple_email.md"
 	},
 	{
 		"name":"send email with pic",
-		"zh_name":"带图邮件发送"
+		"zh_name":"带图邮件发送",
+		"filename":"send_email_with_picture.md"
 	}
 ]
