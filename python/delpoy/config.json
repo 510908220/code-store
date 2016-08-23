@@ -1,0 +1,20 @@
+[
+	{
+		"name":"supervisor",
+		"zh_name":"supervisor进程管理",
+		"filename":"supervisor.md"
+	},
+	{
+		"name":"uwsgi",
+		"zh_name":"uWSGI",
+		"filename":"uwsgi.md"
+	},
+		{
+		"name":"gunicorn",
+		"zh_name":"gunicorn",
+		"filename":"gunicorn.md"
+	}
+]
+
+
+
