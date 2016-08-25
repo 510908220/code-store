@@ -57,12 +57,10 @@ root@wq-native-22-5-1-69:/opt/env/test#
 
 ## 最佳实践
 
-* 指定 python 版本  
-&emsp;&emsp;首先，对于文章开始的问题，最好的解决方案就是创建一个 python2.7 的虚拟环境，
-在这个虚拟环境下使用 py2.7 依赖的框架。这样就不必修改全局的 python，避免造成系统
+#####指定 python 版本  
+&emsp;&emsp;首先，对于文章开始的问题，最好的解决方案就是创建一个python2.7的虚拟环境，在这个虚拟环境下使用py2.7依赖的框架。这样就不必修改全局的 python，避免造成系统
 其它问题。而且，不需要修改原来的程序，强行指定使用自己安装的 python。  
-&emsp;&emsp;对于指定 python 版本，可以使用 -p PYTHON_EXE, –python=PYTHON_EXE 来指定
-python 程序。  
+&emsp;&emsp;对于指定 python 版本，可以使用 -p PYTHON_EXE, –python=PYTHON_EXE 来指定python 程序。  
 ```
 liuchang@ubuntu:~$ virtualenv -p /usr/bin/python3.4 ENV3.4
 Running virtualenv with interpreter /usr/bin/python3.4
