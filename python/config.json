@@ -4,7 +4,8 @@
 		"databases",
 		"ssh",
 		"env",
-		"delpoy"
+		"delpoy",
+		"code"
 	     ],
 
 	"description":"整理python相关的代码"
