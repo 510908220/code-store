@@ -72,6 +72,165 @@ server = jenkins.Jenkins('http://localhost:8080')
 
 	当第一次触发构建的时候，当颜色状态为`notbuilt`时，获取到的`lastBuild`为`None`
 
+## 构建各个阶段
+
+#####第一次构建
+
+```
+scm --- {}
+color --- red
+lastSuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+actions --- []
+lastCompletedBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+lastUnsuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+upstreamProjects --- []
+lastFailedBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+healthReport --- [{u'iconUrl': u'health-20to39.png', u'score': 40, u'description': u'Build stability: 3 out of the last 5 builds failed.', u'iconClassName': u'icon-health-20to39'}]
+queueItem --- None
+lastBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+lastStableBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+description --- 
+downstreamProjects --- []
+concurrentBuild --- False
+lastUnstableBuild --- None
+buildable --- True
+displayNameOrNull --- None
+inQueue --- False
+keepDependencies --- False
+name --- aliyun
+displayName --- aliyun
+builds --- [{u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}, {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}, {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}, {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}, {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}, {u'url': u'http://localhost:8080/job/aliyun/7/', u'number': 7}, {u'url': u'http://localhost:8080/job/aliyun/6/', u'number': 6}, {u'url': u'http://localhost:8080/job/aliyun/5/', u'number': 5}, {u'url': u'http://localhost:8080/job/aliyun/4/', u'number': 4}, {u'url': u'http://localhost:8080/job/aliyun/3/', u'number': 3}, {u'url': u'http://localhost:8080/job/aliyun/2/', u'number': 2}, {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}]
+firstBuild --- {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}
+url --- http://localhost:8080/job/aliyun/
+nextBuildNumber --- 13
+property --- []
+```
+warning:可以看到color值notbuilt,lastBuild值为None
+
+#####正在构建
+
+```
+scm --- {}
+color --- blue_anime
+lastSuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}
+actions --- []
+lastCompletedBuild --- {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}
+lastUnsuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}
+upstreamProjects --- []
+lastFailedBuild --- {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}
+healthReport --- [{u'iconUrl': u'health-40to59.png', u'score': 60, u'description': u'Build stability: 2 out of the last 5 builds failed.', u'iconClassName': u'icon-health-40to59'}]
+queueItem --- None
+lastBuild --- {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}
+lastStableBuild --- {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}
+description --- 
+downstreamProjects --- []
+concurrentBuild --- False
+lastUnstableBuild --- None
+buildable --- True
+displayNameOrNull --- None
+inQueue --- False
+keepDependencies --- False
+name --- aliyun
+displayName --- aliyun
+builds --- [{u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}, {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}, {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}, {u'url': u'http://localhost:8080/job/aliyun/7/', u'number': 7}, {u'url': u'http://localhost:8080/job/aliyun/6/', u'number': 6}, {u'url': u'http://localhost:8080/job/aliyun/5/', u'number': 5}, {u'url': u'http://localhost:8080/job/aliyun/4/', u'number': 4}, {u'url': u'http://localhost:8080/job/aliyun/3/', u'number': 3}, {u'url': u'http://localhost:8080/job/aliyun/2/', u'number': 2}, {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}]
+url --- http://localhost:8080/job/aliyun/
+firstBuild --- {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}
+nextBuildNumber --- 11
+property --- []
+```
+
+#####构建成功
+```
+scm --- {}
+color --- blue
+lastSuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+actions --- []
+lastCompletedBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+lastUnsuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}
+upstreamProjects --- []
+lastFailedBuild --- {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}
+healthReport --- [{u'iconUrl': u'health-40to59.png', u'score': 60, u'description': u'Build stability: 2 out of the last 5 builds failed.', u'iconClassName': u'icon-health-40to59'}]
+queueItem --- None
+lastBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+lastStableBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+description --- 
+downstreamProjects --- []
+concurrentBuild --- False
+lastUnstableBuild --- None
+buildable --- True
+displayNameOrNull --- None
+inQueue --- False
+keepDependencies --- False
+name --- aliyun
+displayName --- aliyun
+builds --- [{u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}, {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}, {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}, {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}, {u'url': u'http://localhost:8080/job/aliyun/7/', u'number': 7}, {u'url': u'http://localhost:8080/job/aliyun/6/', u'number': 6}, {u'url': u'http://localhost:8080/job/aliyun/5/', u'number': 5}, {u'url': u'http://localhost:8080/job/aliyun/4/', u'number': 4}, {u'url': u'http://localhost:8080/job/aliyun/3/', u'number': 3}, {u'url': u'http://localhost:8080/job/aliyun/2/', u'number': 2}, {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}]
+url --- http://localhost:8080/job/aliyun/
+firstBuild --- {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}
+nextBuildNumber --- 12
+property --- []
+```
+
+#####取消构建
+```
+scm --- {}
+color --- aborted
+lastSuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}
+actions --- []
+lastCompletedBuild --- {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}
+lastUnsuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}
+upstreamProjects --- []
+lastFailedBuild --- {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}
+healthReport --- [{u'iconUrl': u'health-40to59.png', u'score': 60, u'description': u'Build stability: 2 out of the last 5 builds failed.', u'iconClassName': u'icon-health-40to59'}]
+queueItem --- None
+lastBuild --- {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}
+lastStableBuild --- {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}
+description --- 
+downstreamProjects --- []
+concurrentBuild --- False
+lastUnstableBuild --- None
+buildable --- True
+displayNameOrNull --- None
+inQueue --- False
+keepDependencies --- False
+name --- aliyun
+displayName --- aliyun
+builds --- [{u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}, {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}, {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}, {u'url': u'http://localhost:8080/job/aliyun/7/', u'number': 7}, {u'url': u'http://localhost:8080/job/aliyun/6/', u'number': 6}, {u'url': u'http://localhost:8080/job/aliyun/5/', u'number': 5}, {u'url': u'http://localhost:8080/job/aliyun/4/', u'number': 4}, {u'url': u'http://localhost:8080/job/aliyun/3/', u'number': 3}, {u'url': u'http://localhost:8080/job/aliyun/2/', u'number': 2}, {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}]
+url --- http://localhost:8080/job/aliyun/
+firstBuild --- {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}
+nextBuildNumber --- 11
+property --- []
+```
+
+#####构建失败
+```
+scm --- {}
+color --- red
+lastSuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+actions --- []
+lastCompletedBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+lastUnsuccessfulBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+upstreamProjects --- []
+lastFailedBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+healthReport --- [{u'iconUrl': u'health-20to39.png', u'score': 40, u'description': u'Build stability: 3 out of the last 5 builds failed.', u'iconClassName': u'icon-health-20to39'}]
+queueItem --- None
+lastBuild --- {u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}
+lastStableBuild --- {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}
+description --- 
+downstreamProjects --- []
+concurrentBuild --- False
+lastUnstableBuild --- None
+buildable --- True
+displayNameOrNull --- None
+inQueue --- False
+keepDependencies --- False
+name --- aliyun
+displayName --- aliyun
+builds --- [{u'url': u'http://localhost:8080/job/aliyun/12/', u'number': 12}, {u'url': u'http://localhost:8080/job/aliyun/11/', u'number': 11}, {u'url': u'http://localhost:8080/job/aliyun/10/', u'number': 10}, {u'url': u'http://localhost:8080/job/aliyun/9/', u'number': 9}, {u'url': u'http://localhost:8080/job/aliyun/8/', u'number': 8}, {u'url': u'http://localhost:8080/job/aliyun/7/', u'number': 7}, {u'url': u'http://localhost:8080/job/aliyun/6/', u'number': 6}, {u'url': u'http://localhost:8080/job/aliyun/5/', u'number': 5}, {u'url': u'http://localhost:8080/job/aliyun/4/', u'number': 4}, {u'url': u'http://localhost:8080/job/aliyun/3/', u'number': 3}, {u'url': u'http://localhost:8080/job/aliyun/2/', u'number': 2}, {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}]
+url --- http://localhost:8080/job/aliyun/
+firstBuild --- {u'url': u'http://localhost:8080/job/aliyun/1/', u'number': 1}
+nextBuildNumber --- 13
+proper ty --- []
+```
 
 ## 使用注意
 
