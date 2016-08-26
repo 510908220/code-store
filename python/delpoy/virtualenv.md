@@ -62,59 +62,68 @@ root@wq-native-22-5-1-69:/opt/env/test#
 其它问题。而且，不需要修改原来的程序，强行指定使用自己安装的 python。  
 &emsp;&emsp;对于指定 python 版本，可以使用 -p PYTHON_EXE, –python=PYTHON_EXE 来指定python 程序。  
 ```
-liuchang@ubuntu:~$ virtualenv -p /usr/bin/python3.4 ENV3.4
+root@iZ25r4jcgl5Z:/env# virtualenv -p /usr/bin/python3.4 /env/test3.4
 Running virtualenv with interpreter /usr/bin/python3.4
 Using base prefix '/usr'
-New python executable in ENV3.4/bin/python3.4
-Also creating executable in ENV3.4/bin/python
-Installing setuptools, pip...done.
-liuchang@ubuntu:~$ cd ENV3.4/
-liuchang@ubuntu:~/ENV3.4$ source ./bin/activate
-(ENV3.4)liuchang@ubuntu:~/ENV3.4$ python --version
-Python 3.4.0
+New python executable in /env/test3.4/bin/python3.4
+Also creating executable in /env/test3.4/bin/python
+Please make sure you remove any previous custom paths from your /root/.pydistutils.cfg file.
+Installing setuptools, pip, wheel...done.
+root@iZ25r4jcgl5Z:/env# cd test3.4/
+root@iZ25r4jcgl5Z:/env/test3.4# source ./bin/activate
+(test3.4) root@iZ25r4jcgl5Z:/env/test3.4# python --version
+Python 3.4.3
+
 ```
-&emsp;&emsp;可以看到，我们创建了一个 ENV，默认的 python 版本已经是 3.4。  
-* 生成可打包的环境  
-&emsp;&emsp;其次，在某种特殊的需求下，可能没有网络，我们期望直接打包一个 ENV，可以解压
-后直接使用。这时候可以使用 virtualenv –relocatable 指令将一个 ENV 修改为可更改位
+&emsp;&emsp;可以看到，我们创建了一个test3.4，默认的python 版本已经是3.4
+
+
+#####生成可打包的环境  
+&emsp;&emsp;其次，在某种特殊的需求下，可能没有网络，我们期望直接打包一个 ENV，可以解压后直接使用。这时候可以使用 virtualenv –relocatable 指令将一个 ENV 修改为可更改位
 置的 ENV。  
 ```
-liuchang@ubuntu:~/ENV3.4$ virtualenv --relocatable ./
-Making script ./bin/pip3 relative
-Making script ./bin/easy_install relative
-Making script ./bin/easy_install-3.4 relative
-Making script ./bin/pip relative
-Making script ./bin/pip3.4 relative
+root@iZ25r4jcgl5Z:/env# cd test3.4/
+root@iZ25r4jcgl5Z:/env/test3.4# virtualenv --relocatable ./
+Making script /env/test3.4/bin/easy_install-3.4 relative
+Making script /env/test3.4/bin/easy_install relative
+Making script /env/test3.4/bin/pip3.4 relative
+Making script /env/test3.4/bin/wheel relative
+Making script /env/test3.4/bin/pip3 relative
+Making script /env/test3.4/bin/python-config relative
+Making script /env/test3.4/bin/pip relative
+
 ```
-&emsp;&emsp;当前的 ENV 相关的可执行文件都被修改为相对路径，你可以打包当前目录，上传到其
-它位置直接使用。  
-* 默认环境变量和配置文件
-&emsp;&emsp;在上面，我们讲了指定 python 版本的方法，但是如果每次生成 virtualenv 都需要手
-动指定还是比较麻烦的，我们可以通过二种办法来指定默认配置, 分别为环境变量和配置文
-件。  
-  * 环境变量  
-&emsp;&emsp;对于每个命令行参数，都会先查找环境变量是否已经指定。比如 –python 参数，会先
-查看 VIRTUALENV_PYTHON。  
-&emsp;&emsp;环境变量的形式为：对于命令行参数，变换为大写，并将减号替换为下划线，例如对于
-参数 –foo-bar，对应的环境变量就是 VIRTUALENV_FOO_BAR。  
+&emsp;&emsp;当前的 ENV 相关的可执行文件都被修改为相对路径，你可以打包当前目录，上传到其它位置直接使用
+
+##### 默认环境变量和配置文件
+&emsp;&emsp;在上面，我们讲了指定 python 版本的方法，但是如果每次生成 virtualenv 都需要手动指定还是比较麻烦的，我们可以通过二种办法来指定默认配置, 分别为环境变量和配置文件
+  
+  - 环境变量  
+&emsp;&emsp;对于每个命令行参数，都会先查找环境变量是否已经指定。比如 –python 参数，会先查看 VIRTUALENV_PYTHON。  
+&emsp;&emsp;环境变量的形式为：对于命令行参数，变换为大写，并将减号替换为下划线，例如对于参数 –foo-bar，对应的环境变量就是 VIRTUALENV_FOO_BAR:
 ```
-$ export VIRTUALENV_PYTHON=/opt/python-3.3/bin/python
-$ virtualenv ENV
+root@iZ25r4jcgl5Z:/env# export VIRTUALENV_PYTHON=/env/test3.4/bin/python
+root@iZ25r4jcgl5Z:/env# virtualenv test3.4.1
+Running virtualenv with interpreter /env/test3.4/bin/python
+Using real prefix '/usr'
+Path not in prefix '/env/test3.4/include/python3.4m' '/usr'
+New python executable in /env/test3.4.1/bin/python
+Please make sure you remove any previous custom paths from your /root/.pydistutils.cfg file.
+Installing setuptools, pip, wheel...done.
 ```
-  * 配置文件  
+  - 配置文件  
 &emsp;&emsp;virtualenv 也会检查相关的配置文件，在 *nix 系统上，配置文件为 $HOME/.virtualenv/
 virtualenv.ini，在 Windows 上，则 j 是%APPDATA%/virtualenv/virtualenv.ini. 示例如
-下：  
+下：
 ```
 [virtualenv]
 python = /opt/python-3.3/bin/python
 ```
 
-高级用法
---------
-* bootstrap 脚本  
-&emsp;&emsp;在使用 virtualenv 命令创建了一个 ENV 后，它只会生成一个 ENV，生成必要的目录
-文件。一般情况下，我们还要拉取代码，安装常用库等操作。  
+# 高级用法
+
+##### bootstrap 脚本  
+&emsp;&emsp;在使用 virtualenv 命令创建了一个 ENV 后，它只会生成一个 ENV，生成必要的目录文件.一般情况下，我们还要拉取代码，安装常用库等操作。  
 &emsp;&emsp;virtualenv 支持自定义的 bootstrap 脚本，在生成 ENV 的时候，完成一些自定义的操
 作。  
 &emsp;&emsp;virtualenv 的 bootstrap 脚本通过钩子（ HOOK）的形式来支持自定义，钩子函数分
@@ -136,50 +145,13 @@ def after_install(options, home_dir):
     'setup', home_dir])
 ```
 
-virtualenvwrapper
---------
-#####安装
-pip install virtualenvwrapper
-安装完成后， 会在下面的位置生成virtualwrapper的shell脚本:
-`/usr/local/bin/virtualenvwrapper.sh`
-在使用virtualenvwrapper时， 需要配置登录的shell初始化脚本， 将virtualenvwrapper.sh的信息读入当前的shell环境。这里以base为例， 通过对用户根目录下（即/home/[username]）的.bashrc配置文件进入如下修改即可。
-修改.bashrc:
-
+##### virtualenv-api
+[virtualenv-api](https://pypi.python.org/pypi/virtualenv-api)是一个对virtualenv的包装, 提供已用的python接口. 例如:
 ```
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=/opt/env
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
+from virtualenvapi.manage import VirtualEnvironment
+env = VirtualEnvironment('/path/to/environment/name')
+env.is_installed('mezzanine')
 ```
 
-#####常用命令
-
-创新的虚拟环境
-- mkvirtualenv [env1]
-该命令会帮我们创建一个新环境,默认情况下，环境的目录是.virtualenv/en1,创建过程中它会自动帮我们安装pip，以后我们要安装新依赖时可直接使用pip命令。
-创建完之后，自动切换到该环境下工作，可看到提示符变为：
-(env1)$
-在这个环境下安装的依赖不会影响到其他的环境
-- lssitepackages 显示该环境中所安装的包
-
-切换环境
-- workon [env]
-随时使用“workon 环境名”可以进行环境切换，如果不带环境名参数，则显示当前使用的环境
-- deactivate
-在某个环境中使用，切换到系统的python环境
-
-其他命令
-- showvirtualenv [env] 显示指定环境的详情。
-- rmvirtualenv [env] 移除指定的虚拟环境，移除的前提是当前没有在该环境中工作。如在该环境工作，先使用deactivate退出。
-- cpvirtualenv [source] [dest] 复制一份虚拟环境。
-- cdvirtualenv [subdir] 把当前工作目录设置为所在的环境目录。
-- cdsitepackages [subdir] 把当前工作目录设置为所在环境的sitepackages路径。
-- add2virtualenv [dir] [dir] 把指定的目录加入当前使用的环境的path中，这常使用于在多个project里面同时使用一个较大的库的情况。
-- toggleglobalsitepackages -q 控制当前的环境是否使用全局的sitepackages目录。
-
-
-说明
---------
-上面内容均来自网上整理
-
+基于此可以实现在部署app时自动安装依赖的文件等.
 
