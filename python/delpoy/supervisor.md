@@ -47,7 +47,7 @@ directory=/home/studio/python
 autostart=true
 autorestart=true
 startretries=3
-stderr_logfile=/var/log/time/currenttime.err.log
+redirect_stderr=true    
 stdout_logfile=/var/log/time/currenttime.out.log
 user=www-data
 ```
@@ -63,6 +63,7 @@ user=www-data
 - ```stdout_logfile ``` 程序输出
 - ```user ``` 程序启动的用户
 - ```environment ``` 传给程序的环境变量
+- ```redirect_stderr``` 重定向输出的日志
 
 由于会写日志，所以我们需要确保```/var/log/time```目录的存在.
 
