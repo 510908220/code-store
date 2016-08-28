@@ -118,20 +118,94 @@ Web管理
 ```
 [inet_http_server]
 port = 0:9001
-username = user # Basic auth username
-password = pass # Basic auth password
+username = user ; Basic auth username
+password = pass ; Basic auth password
 ```
 然后可以使用浏览器打开ip:9001,如图
 ![图](http://7xk7ho.com1.z0.glb.clouddn.com/supervisor.png)
 
+
+多进程
+------------
+当管理的进程会产生新的进程时, 会遇到执行完stop命令后子进程依然在:
+这是我使用supervisor启动了一个django, 可以看到有俩进程.
+```
+www-data 14853  0.0  2.3  77856 24124 ?        S    17:17   0:00 /env/test/bin/python manage.py runserver 0:8888
+www-data 14856  0.9  2.5 152548 25648 ?        Sl   17:17   0:04 /env/test/bin/python manage.py runserver 0:8888
+```
+当执行stop命令后, 如图:
+```
+www-data 14856  0.9  2.5 152548 25648 ?        Sl   17:17   0:05 /env/test/bin/python manage.py runserver 0:8888
+```
+为了关闭子进程， 这里需要介绍两个配置项 stopasgroup 和 killasgroup：
+```
+; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。
+stopasgroup=false             ; send stop signal to the UNIX process 
+
+; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。
+killasgroup=false             ; SIGKILL the UNIX process group (def false)
+```
+所以当增加```stopasgroup=true```配置后， 父进程关闭子进程也就关掉了.
+
+组管理
+-----------------
+```
+[group:thegroupname]
+programs=progname1,progname2  ; each refers to 'x' in [program:x] definitions
+priority=999                  ; the relative start priority (default 999)
+```
+当添加了上述配置后，```progname1``` 和 ```progname2``` 的进程名就会变成 ```thegroupname:progname1``` 和 ```thegroupname:progname2``` 以后就要用这个名字来管理进程了，而不是之前的 ```progname1```.
+
+以后执行``` supervisorctl stop thegroupname``` 就能同时结束 ```progname1``` 和 ```progname2```，执行 ```supervisorctl stop thegroupname:progname1``` 就能结束 ```progname1```
+
+
+supervisorctl 命令介绍
+------------------
+```
+# 停止某一个进程，program_name 为 [program:x] 里的 x
+supervisorctl stop program_name
+# 启动某个进程
+supervisorctl start program_name
+# 重启某个进程
+supervisorctl restart program_name
+# 结束所有属于名为 groupworker 这个分组的进程 (start，restart 同理)
+supervisorctl stop groupworker:
+# 结束 groupworker:name1 这个进程 (start，restart 同理)
+supervisorctl stop groupworker:name1
+# 停止全部进程，注：start、restart、stop 都不会载入最新的配置文件
+supervisorctl stop all
+# 载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程
+supervisorctl reload
+# 根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启
+supervisorctl update
+```
+
+开机自动启动 Supervisord
+-------------------
+如果是pip方式安装的话默认是没有被安装成服务，在ubuntu下可以这样来安装服务:
+```
+# 下载脚本
+sudo su - root -c "sudo curl https://gist.githubusercontent.com/howthebodyworks/176149/raw/d60b505a585dda836fadecca8f6b03884153196b/supervisord.sh > /etc/init.d/supervisord"
+# 设置该脚本为可以执行
+sudo chmod +x /etc/init.d/supervisord
+# 设置为开机自动运行
+sudo update-rc.d supervisord defaults
+# 试一下，是否工作正常
+service supervisord stop
+service supervisord start
+```
+注意：这个脚本下载下来后，还需检查一下与我们的配置是否相符合，比如默认的配置文件路径，pid 文件路径等，如果存在不同则需要进行一些修改
 
 附录
 -------
 
 - 引用[monitoring-processes-with-supervisord](https://serversforhackers.com/monitoring-processes-with-supervisord)  
 - [不错](http://my.oschina.net/crooner/blog/395069)
+- [supervisord-tutorial](http://www.restran.net/2015/10/04/supervisord-tutorial/)
+- [setting-supervisor-to-really-stop-django-runserver](https://coderwall.com/p/4tcw7w/setting-supervisor-to-really-stop-django-runserver)
 
 注意
 -------
 - 在web界面查看log的时候， 好像只能显示指定数量的字符。
 - print直接显示不出来的，需要sys.stdout.flush() [答案](http://stackoverflow.com/questions/13934801/supervisord-logs-dont-show-my-ouput)
+
