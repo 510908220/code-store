@@ -243,4 +243,4 @@ service supervisord start
 -------
 - 在web界面查看log的时候， 好像只能显示指定数量的字符。
 - print直接显示不出来的，需要sys.stdout.flush() [答案](http://stackoverflow.com/questions/13934801/supervisord-logs-dont-show-my-ouput)
-
+- 在ubuntu下使用apt-get 方式安装可能是版本问题, 当启动的进程有子进程时stop时子进程无法关闭. 改为pip安装最新版然后配置一下服务的就可以了。
