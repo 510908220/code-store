@@ -1,5 +1,6 @@
 # 一个由于django model的save引起的bug
 
+
 ## 执行环境
 
 ##### 数据模型
@@ -70,6 +71,7 @@ def host_process(host):
     host.save()
 ```
 ######2. heartbeat.py
+这个进程主要是检测在远程主机上部署的代理状态.
 ```
 def heartbeat_detection(host):
     cl = client.Client(host.ip, 8000, host.deploy_version)
