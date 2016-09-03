@@ -1,5 +1,7 @@
 # 一个由于django model的save引起的bug
 
+> 背景是实现一个对多个windows主机程序部署 . 每台主机上部署了一个rpc server. 后台服务器与rpc server通信实现具体的部署操作.
+
 
 ## 执行环境
 
@@ -105,7 +107,7 @@ UPDATE `hosts` SET `ip` = '10.6.0.231', `deploy_version` = '1.0.0.6', `remote_ve
 ## 建议
 
 - 打开日志:
-在调试django时指定一个名为```django```的logger, 类似这样:
+在调试django时指定一个名为```django.db```的logger, 类似这样:
 ```
     'handlers': {
         'default': {
@@ -117,7 +119,7 @@ UPDATE `hosts` SET `ip` = '10.6.0.231', `deploy_version` = '1.0.0.6', `remote_ve
             'formatter': 'standard',  
         },
     'loggers': {
-        'django': {
+        'django.db': {
             'handlers': ['default', 'error'],
             'level': 'DEBUG',
             'propagate': False
@@ -127,3 +129,9 @@ UPDATE `hosts` SET `ip` = '10.6.0.231', `deploy_version` = '1.0.0.6', `remote_ve
 
 -  使用debug_toolbar:
 可以在调试模式下加入```debug_toolbar```这个app, 这样可以在页面上看到view处理函数操作model时对应的sql语句. 对于那些不返回页面的view直接是无法看到对应sql的,不过是有解决方案的,通过中间件实现.可以参考[How to use django-debug-toolbar for django-tastypie](http://stackoverflow.com/questions/14618203/how-to-use-django-debug-toolbar-for-django-tastypie)
+
+- 手动打印: 每一个```QuerySet ```都有一个```query```属性.  可以打印对应的sql语句:
+```
+qs = Model.objects.filter(name='test')
+print qs.query
+```
