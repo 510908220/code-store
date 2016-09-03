@@ -1,13 +1,33 @@
-{
-	"category": [
-		"internet",
-		"databases",
-		"ssh",
-		"env",
-		"delpoy",
-		"code"
-	     ],
-
-	"description":"整理python相关的代码"
-
+{  
+   "category":[  
+      {  
+         "name":"delpoy",
+         "description":""
+      },
+      {  
+         "name":"code-linter",
+         "description":""
+      },
+      {  
+         "name":"env",
+         "description":""
+      },
+      {  
+         "name":"devops",
+         "description":""
+      },
+      {  
+         "name":"emails",
+         "description":""
+      },
+      {  
+         "name":"databases",
+         "description":""
+      },
+      {  
+         "name":"awesome-lib",
+         "description":"从https://github.com/vinta/awesome-python里整理自己需要的常用的库, 不用每次再去查找了."
+      }
+   ],
+   "description":"整理python相关的代码"
 }
