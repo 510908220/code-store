@@ -339,5 +339,74 @@ signal.signal(signal.SIGTERM, signal.SIG_DFL)
 给信号```SIGTERM```设置一个默认的处理.
 
 
+qcluster
+---------
+
+```
+class Cluster(object):
+    def __init__(self, broker=None):
+        self.broker = broker or get_broker()
+        self.sentinel = None
+        self.stop_event = None
+        self.start_event = None
+        self.pid = current_process().pid
+        self.host = socket.gethostname()
+        self.timeout = Conf.TIMEOUT
+        signal.signal(signal.SIGTERM, self.sig_handler)
+        signal.signal(signal.SIGINT, self.sig_handler)
+
+    def start(self):
+        # Start Sentinel
+        self.stop_event = Event()
+        self.start_event = Event()
+        self.sentinel = Process(target=Sentinel,
+                                args=(self.stop_event, self.start_event, self.broker, self.timeout))
+        self.sentinel.start()
+        logger.info(_('Q Cluster-{} starting.').format(self.pid))
+        while not self.start_event.is_set():
+            sleep(0.1)
+        return self.pid
+
+    def stop(self):
+        if not self.sentinel.is_alive():
+            return False
+        logger.info(_('Q Cluster-{} stopping.').format(self.pid))
+        self.stop_event.set()
+        self.sentinel.join()
+        logger.info(_('Q Cluster-{} has stopped.').format(self.pid))
+        self.start_event = None
+        self.stop_event = None
+        return True
+
+    def sig_handler(self, signum, frame):
+        logger.debug(_('{} got signal {}').format(current_process().name,
+                                                  Conf.SIGNAL_NAMES.get(signum, 'UNKNOWN')))
+        self.stop()
+
+    @property
+    def stat(self):
+        if self.sentinel:
+            return Stat.get(self.pid)
+        return Status(self.pid)
+
+    @property
+    def is_starting(self):
+        return self.stop_event and self.start_event and not self.start_event.is_set()
+
+    @property
+    def is_running(self):
+        return self.stop_event and self.start_event and self.start_event.is_set()
+
+    @property
+    def is_stopping(self):
+        return self.stop_event and self.start_event and self.start_event.is_set() and self.stop_event.is_set()
+
+    @property
+    def has_stopped(self):
+        return self.start_event is None and self.stop_event is None and self.sentinel
+```
+
+这里创建sentinel进程时和一般的有点不一样, 指定的是一个Sentinel对象，对象在__init__.py时执行了相应的逻辑.这应该算一个技巧了. 一般是传入一个可调用对象，这里相当于是调用了构造函数，在构造函数里执行了一般可调用对象的逻辑.
+
 
 
