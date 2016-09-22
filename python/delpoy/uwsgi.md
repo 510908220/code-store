@@ -69,6 +69,66 @@ Example ini configuration file usage:
 uwsgi --ini uwsgi.ini
 ```
 
+nginx
+----
+
+```
+
+server {
+    listen                  443;
+    charset                 utf-8;
+    ssl                     on;
+    ssl_certificate         /opt/disk2/var/serverconfig/server.cert;
+    ssl_certificate_key     /opt/disk2/var/serverconfig/server.key;
+
+    location / {
+        root   /opt/disk2/var/www/sample;
+        uwsgi_pass 127.0.0.1:9001;
+        include    uwsgi_params;
+    }
+
+    location /static/ {
+        expires 5d;
+        alias /opt/disk2/var/www/sample/static/;
+    }
+
+location ^(.*)\.favicon.ico$ {
+            log_not_found off;
+            }
+    location ~ /\.svn(.*)$ {
+        deny  all;
+    }
+
+}
+server {
+    listen                  80;
+    charset                 utf-8;
+    server_name localhost;
+    access_log  /var/log/collector/access.log;
+    error_log /var/log/collector/error.log;
+
+    root /opt/disk2/var/www/collector;
+    location / {
+        root   /opt/disk2/var/www/collector;
+        uwsgi_pass 127.0.0.1:8000;
+        include    uwsgi_params;
+    }
+
+    location /static/ {
+        expires 5d;
+        alias /opt/disk2/var/www/collector/static/;
+    }
+
+
+location ^(.*)\.favicon.ico$ {
+            log_not_found off;
+            }
+    location ~ /\.svn(.*)$ {
+        deny  all;
+    }
+}
+
+```
 参考
 ----
 - [How to use Django with uWSGI](https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/uwsgi/)
