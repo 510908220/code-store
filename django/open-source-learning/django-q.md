@@ -410,3 +410,21 @@ class Cluster(object):
 
 
 
+问题
+-------
+
+里面看到了一些数据库相关的操作.有点疑惑. 这里记录一下:
+- transaction.get_autocommit():
+
+```
+class ConnectionHandler(object):
+    def __init__(self, databases=None):
+        """
+        databases is an optional dictionary of database definitions (structured
+        like settings.DATABASES).
+        """
+        self._databases = databases
+        self._connections = local()
+```
+
+http://stackoverflow.com/questions/34695052/how-is-django-persistent-database-connections-thread-safe
