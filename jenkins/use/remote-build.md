@@ -8,7 +8,7 @@
 
 - 设置token:构建触发器–>触发远程构建–>身份验证令牌
 
-- 发送一个get请求:`http://localhost:8080/job/pamc_10.65.200.144/build?token=xxxxx`
+- 发送一个get请求:`http://localhost:8080/job/job_name/build?token=xxxxx`
 
 ## 带参数构建
 
@@ -23,4 +23,4 @@
 ![](http://ocidwvtj2.bkt.clouddn.com/enter_build_with_parameters.png),点击开始构建
 
   上面是手动触发`带参数的构建`方式,通过url的话类似这样:
-http://localhost:8080/job/pamc_10.65.200.144/buildWithParameters?token=xxx&revision=13833
+http://localhost:8080/job/job_name/buildWithParameters?token=xxx&revision=13833
