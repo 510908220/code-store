@@ -96,7 +96,7 @@ def heartbeat_detection(host):
 
 &#160;&#160;&#160;&#160;为什么会这样呢? 反复看代码发现只有```host_process```会修改```remote_version```和```status```字段, 也查看了机器上没有其他额外的```deploy```脚本在执行. 反复的找还是没头绪，后来想到看一下```django```的日志输出:
 ```
-UPDATE `hosts` SET `ip` = '10.6.0.231', `deploy_version` = '1.0.0.6', `remote_version` = '1.0.0.5', `log` = '', `agent_status` = 'online', `last_agent_detection` = '2016-09-01 15:01:43', `status` = 'running', `created` = '2016-08-30 17:40:47', `updated` = '2016-09-01 15:01:43' WHERE `hosts`.`id` = 2; 
+UPDATE `hosts` SET `ip` = '110.6.0.231', `deploy_version` = '111.0.0.6', `remote_version` = '111.0.0.5', `log` = '', `agent_status` = 'online', `last_agent_detection` = '2016-09-01 15:01:43', `status` = 'running', `created` = '2016-08-30 17:40:47', `updated` = '2016-09-01 15:01:43' WHERE `hosts`.`id` = 2; 
 ```
 看完日志我就恍然大悟了，原来```save```方法是全字段更新, 这样问题就很明显了. ```host_process```和 ```heartbeat_detection``` 都会执行一个全部更新的sql语句. 这样就会导致数据的覆盖. 所以会看到值在不断的变化.
 
