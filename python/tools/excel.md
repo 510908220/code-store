@@ -27,7 +27,7 @@ with open("data.xls", "wb") as f:
 
 excel文件内容为:
 
-![](1.png)
+![](imgs/excel_1.png)
 
 读取数据:
 
@@ -74,7 +74,7 @@ with open("data.xls", "wb") as f:
 
 执行结果:
 
-![](2.png)
+![](imgs/excel_2.png)
 
 读取数据:
 
