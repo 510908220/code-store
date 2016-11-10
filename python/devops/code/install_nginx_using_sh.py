@@ -1,9 +1,14 @@
 # -*- coding: utf8 -*-
 
+
 import subprocess
+
+a = [1, 2, 3, 4]
+print a
 
 
 def install_sh():
+
     try:
         retcode = subprocess.call("pip install sh", shell=True)
         return retcode
