@@ -48,3 +48,5 @@ scp xxx;
 #    <org.jvnet.hudson.plugins.SSHBuilder plugin="ssh@2.4">, 2.4可以根据接口读取
 
 # 配置页面，http://192.168.33.10:8080/configure如何修改配置以批量添加机器
+# SSH remote hosts 配置文件为/var/lib/jenkins/org.jvnet.hudson.plugins.SSHBuildWrapper.xml
+# 但是修改后得重启才可以. 还是得找个api才行...
