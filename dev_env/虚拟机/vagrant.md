@@ -95,6 +95,8 @@ end
 ```
 这样启动过程会出现界面，可以看到具体错误. 我这里是由于biso未开启```VT-x/AMD-V```支持.开启后保存重启即可.
 
+## 附加
+[启动多个虚拟机](http://www.thisprogrammingthing.com/2015/multiple-vagrant-vms-in-one-vagrantfile/)
 
 ## 参考
 - [在windows下进行linux开发：利用Vagrant+virtualbox](http://blog.star7th.com/2015/06/1538.html)
