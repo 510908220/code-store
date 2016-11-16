@@ -8,9 +8,9 @@
 Vagrant就是为了解决这个问题而生的。它使用开源 VirtualBox 作为虚拟化支持，可以轻松的跨平台部署
 
 ## 下载
-- VirtualBox
-- Vagrant
-- 虚拟镜像:根据自己要使用的系统下载相应的镜像(比如precise-server-cloudimg-amd64-vagrant-disk1.box)
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- [Vagrant](https://www.vagrantup.com/downloads.html)
+- [虚拟镜像](http://www.vagrantbox.es/):根据自己要使用的系统下载相应的镜像(比如precise-server-cloudimg-amd64-vagrant-disk1.box)
 
 ## 安装
 下载好上面的软件包后，先安装VirtualBox,然后安装Vagrant。都是双击即可安装的，所以没什么好介绍。下面介绍下怎么把镜像导入:
