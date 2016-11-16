@@ -26,7 +26,7 @@ pip install uwsgi
 ```
 [uwsgi]
 master=true      
-socket=127.0.0.1:8000 
+socket=127.0.0.1:8000
 home=/opt/ENV/collector; set PYTHONHOME/virtualenv
 processes=4      
 socket-timeout=300;为所有的socket操作设置内部超时时间（默认4秒
@@ -73,33 +73,6 @@ nginx
 ----
 
 ```
-
-server {
-    listen                  443;
-    charset                 utf-8;
-    ssl                     on;
-    ssl_certificate         /opt/disk2/var/serverconfig/server.cert;
-    ssl_certificate_key     /opt/disk2/var/serverconfig/server.key;
-
-    location / {
-        root   /opt/disk2/var/www/sample;
-        uwsgi_pass 127.0.0.1:9001;
-        include    uwsgi_params;
-    }
-
-    location /static/ {
-        expires 5d;
-        alias /opt/disk2/var/www/sample/static/;
-    }
-
-location ^(.*)\.favicon.ico$ {
-            log_not_found off;
-            }
-    location ~ /\.svn(.*)$ {
-        deny  all;
-    }
-
-}
 server {
     listen                  80;
     charset                 utf-8;
@@ -129,6 +102,27 @@ location ^(.*)\.favicon.ico$ {
 }
 
 ```
+
+FAQ
+---------
+#### no python application found ...
+如果uwsgi配置没错的话,可能就是django启动出错了,我这里是由于uwsgi是apache权限,而启动过程写的日志是root权限导致的.
+
+#### django资源无法加载
+看如下配置:
+```
+location /static/ {
+    expires 5d;
+    alias /opt/disk2/var/www/bale/static;
+}
+```
+由于在static后少加了个/导致资源拼接路径成这样了:
+```
+ /bale/staticjs/browser.js
+```
+
+
+
 参考
 ----
 - [How to use Django with uWSGI](https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/uwsgi/)
